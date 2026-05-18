@@ -5,6 +5,7 @@ import NavbarWrapper from "./NavbarWrapper";
 import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { Button } from "@heroui/react";
 
 const Navbar =async () => {
   const links = [
@@ -17,7 +18,7 @@ const Navbar =async () => {
 const session = await auth.api.getSession({
   headers: await headers()
 })  
-console.log(session)
+const user = session?.user
 
   return (
     <NavbarWrapper>
@@ -40,7 +41,15 @@ console.log(session)
           </div>
 
           <div>
-            <User />
+            {
+              user ? (
+                <div>
+                  <Button className={'bg-yellow-600 rounded-md'}>Logout</Button>
+                <User user={user}/>
+                </div>
+                
+              ):<Link href="/login"><Button className={'bg-yellow-600 rounded-md'}>Login</Button></Link>
+            }
           </div>
         </div>
       </div>

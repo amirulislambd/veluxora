@@ -5,20 +5,16 @@ import { useForm } from "react-hook-form";
 import {
   FiEye,
   FiEyeOff,
-  FiLink,
   FiLock,
   FiMail,
-  FiUpload,
-  FiUser,
 } from "react-icons/fi";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { ResponseImgBb } from "@/lib/dataFecth";
 import toast from "react-hot-toast";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 
-const RegisterPage = () => {
+const LogInPage = () => {
   const {
     register,
     handleSubmit,
@@ -26,43 +22,18 @@ const RegisterPage = () => {
   } = useForm();
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const [photoMode, setPhotoMode] = useState("url");
-  console.log(photoMode);
   const onSubmit = async (data) => {
-    const { fullName, email, password } = data;
-    let finalPhoto = "";
-    try {
-      if (photoMode === "file") {
-        const photoAddress = data?.photoFile[0];
-        if (!photoAddress) {
-          return toast.error("Please select an image file to upload");
-        }
-        const imgBb = await ResponseImgBb(photoAddress);
-        if (imgBb && imgBb.success) {
-          finalPhoto = imgBb.data.display_url;
-        } else {
-          console.error("imgBb error:", imgBb);
-          return toast.error("Image upload failed!");
-        }
-      } else {
-        finalPhoto = data?.photoURL || "";
-      }
-    } catch (error) {
-      console.error("Image upload error:", error);
-      return toast.error("Image upload failed!");
-    }
-    const { data: userData, error } = await authClient.signUp.email({
-      name: fullName,
+    const { email, password } = data;
+    const { data: userData, error } = await authClient.signIn.email({
       email,
       password,
-      image: finalPhoto,
+      callbackURL:'/'
     });
-    if (error) return toast.error(error.message || "Registration failed!");
+    if (error) return toast.error(error.message || "Login failed!");
     if (userData) {
-      toast.success("Registration successful!");
-      await authClient.signOut();
+      toast.success("Login successful!");
       console.log(userData);
-      router.push("/login");
+      router.push("/");
     }
   };
 
@@ -242,4 +213,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default LogInPage;

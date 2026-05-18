@@ -1,12 +1,14 @@
 import { Avatar } from '@heroui/react';
 import React from 'react';
 
-const User = () => {
+const User = ({user}) => {
+    console.log(user)
+    const {image,name} = user
     return (
         <div>
               <Avatar>
-        <Avatar.Image alt="John Doe" src="https://img.heroui.chat/image/avatar?w=400&h=400&u=3" />
-        <Avatar.Fallback>JD</Avatar.Fallback>
+        <Avatar.Image alt="John Doe" src={image} />
+        <Avatar.Fallback>{name?.charAt(0)}</Avatar.Fallback>
       </Avatar>
         </div>
     );
