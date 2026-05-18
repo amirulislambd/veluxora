@@ -3,14 +3,21 @@ import NavLinks from "./NavLinks";
 import User from "./User";
 import NavbarWrapper from "./NavbarWrapper";
 import Link from "next/link";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
-const Navbar = () => {
+const Navbar =async () => {
   const links = [
     { name: "Home", path: "/" },
     { name: "Explore Car", path: "/exploreCar" },
     { name: "Add Car", path: "/addCar" },
     { name: "My Bookings", path: "/myBookings" },
   ];
+
+const session = await auth.api.getSession({
+  headers: await headers()
+})  
+console.log(session)
 
   return (
     <NavbarWrapper>
