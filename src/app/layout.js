@@ -23,13 +23,14 @@ export default function RootLayout({ children }) {
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <Navbar/>
-        <main className="pt-[72px]">
-        {children}
-        </main>
-        <Toaster />
+          <Navbar />
+          <main className="pt-[72px]">
+            {children}
+          </main>
+          <Toaster />
       </body>
     </html>
   );

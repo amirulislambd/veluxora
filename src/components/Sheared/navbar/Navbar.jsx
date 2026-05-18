@@ -1,11 +1,11 @@
 import React from "react";
 import NavLinks from "./NavLinks";
-import User from "./User";
 import NavbarWrapper from "./NavbarWrapper";
 import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { Button } from "@heroui/react";
+import UserMenu from "./UserMenu";
 
 const Navbar =async () => {
   const links = [
@@ -44,8 +44,7 @@ const user = session?.user
             {
               user ? (
                 <div>
-                  <Button className={'bg-yellow-600 rounded-md'}>Logout</Button>
-                <User user={user}/>
+                <UserMenu />
                 </div>
                 
               ):<Link href="/login"><Button className={'bg-yellow-600 rounded-md'}>Login</Button></Link>
