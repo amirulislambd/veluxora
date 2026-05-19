@@ -3,26 +3,28 @@ import Image from "next/image";
 import { FiMapPin, FiUsers, FiTag, FiZap } from "react-icons/fi";
 import { GiSteeringWheel } from "react-icons/gi";
 import { BsFuelPump } from "react-icons/bs";
-// import BookingModal from "@/components/ExploreCars/BookingModal";
-
+import BookingModal from "@/components/ExploreCars/BookingModal";
 
 const DetailsPage = async ({ params }) => {
   const { id } = await params;
-  const res =await fetch(`http://localhost:5000/cars/${id}`)
-    const car =await res.json() 
+  const res = await fetch(`http://localhost:5000/cars/${id}`);
+  const car = await res.json();
 
   const specs = [
     { icon: <FiUsers />, label: "Seats", value: car.seat_capacity },
     { icon: <FiTag />, label: "Type", value: car.car_type },
     { icon: <FiMapPin />, label: "Pickup", value: car.pickup_location },
     { icon: <BsFuelPump />, label: "Fuel", value: car.fuel_type || "Petrol" },
-    { icon: <GiSteeringWheel />, label: "Transmission", value: car.transmission || "Automatic" },
+    {
+      icon: <GiSteeringWheel />,
+      label: "Transmission",
+      value: car.transmission || "Automatic",
+    },
     { icon: <FiZap />, label: "Bookings", value: `${car.booking_count} times` },
   ];
 
   return (
     <main className="max-w-7xl mx-6 md:mx-auto bg-[#0A0A0F]">
-
       {/* ── HERO IMAGE ── */}
       <section className="relative w-full h-[50vh] overflow-hidden">
         <Image
@@ -38,7 +40,11 @@ const DetailsPage = async ({ params }) => {
 
         {/* availability badge */}
         <div className="absolute top-8 right-8">
-          <span className={car.availability_status ? "badge-available" : "badge-unavailable"}>
+          <span
+            className={
+              car.availability_status ? "badge-available" : "badge-unavailable"
+            }
+          >
             {car.availability_status ? "● Available" : "● Unavailable"}
           </span>
         </div>
@@ -64,10 +70,8 @@ const DetailsPage = async ({ params }) => {
       {/* ── MAIN CONTENT ── */}
       <section className="max-w-[1280px] mx-auto px-6 md:px-16 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-
           {/* ── LEFT: Details ── */}
           <div className="lg:col-span-2 space-y-12">
-
             {/* Specs Grid */}
             <div>
               <div className="flex items-center gap-4 mb-8">
@@ -82,11 +86,15 @@ const DetailsPage = async ({ params }) => {
                     key={spec.label}
                     className="bg-[#12121A] border border-[#e6c364]/10 p-5 rounded-sm hover:border-[#e6c364]/30 transition-colors duration-300"
                   >
-                    <div className="text-[#e6c364] text-xl mb-3">{spec.icon}</div>
+                    <div className="text-[#e6c364] text-xl mb-3">
+                      {spec.icon}
+                    </div>
                     <p className="text-[10px] tracking-[0.3em] uppercase text-[#6B6B7A] mb-1">
                       {spec.label}
                     </p>
-                    <p className="text-[#e4e1e9] text-base font-medium">{spec.value}</p>
+                    <p className="text-[#e4e1e9] text-base font-medium">
+                      {spec.value}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -131,7 +139,6 @@ const DetailsPage = async ({ params }) => {
           {/* ── RIGHT: Booking Card ── */}
           <div className="lg:col-span-1">
             <div className="sticky top-24 bg-[#12121A] border border-[#e6c364]/15 p-8 space-y-8">
-
               {/* Price */}
               <div>
                 <p className="text-[10px] tracking-[0.4em] uppercase text-[#6B6B7A] mb-1">
@@ -159,7 +166,9 @@ const DetailsPage = async ({ params }) => {
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-[#6B6B7A]">Seats</span>
-                  <span className="text-[#e4e1e9]">{car.seat_capacity} Persons</span>
+                  <span className="text-[#e4e1e9]">
+                    {car.seat_capacity} Persons
+                  </span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-[#6B6B7A]">Location</span>
@@ -167,7 +176,13 @@ const DetailsPage = async ({ params }) => {
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-[#6B6B7A]">Status</span>
-                  <span className={car.availability_status ? "text-green-400" : "text-red-400"}>
+                  <span
+                    className={
+                      car.availability_status
+                        ? "text-green-400"
+                        : "text-red-400"
+                    }
+                  >
                     {car.availability_status ? "Available" : "Unavailable"}
                   </span>
                 </div>
@@ -177,11 +192,12 @@ const DetailsPage = async ({ params }) => {
               <div className="h-px bg-[#e6c364]/10" />
 
               {/* Book Button — Client Component */}
-              {/* <BookingModal car={car} /> */}
+              <BookingModal car={car} />
 
               {/* Note */}
               <p className="text-[10px] text-[#6B6B7A] text-center tracking-wider leading-relaxed">
-                Free cancellation up to 24 hours before pickup. No hidden charges.
+                Free cancellation up to 24 hours before pickup. No hidden
+                charges.
               </p>
             </div>
           </div>
