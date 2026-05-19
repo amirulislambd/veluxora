@@ -10,9 +10,24 @@ import { authClient } from "@/lib/auth-client";
 
 
 const menuItems = [
-  { id: "add-car",       label: "ADD CAR",       icon: <Car className="text-sm" />,        href: "/dashboard/add-car"       },
-  { id: "my-bookings",   label: "MY BOOKINGS",   icon: <FaCalendar className="text-sm" />, href: "/dashboard/my-bookings"   },
-  { id: "my-added-cars", label: "MY ADDED CARS", icon: <FiList className="text-sm" />,     href: "/dashboard/my-added-cars" },
+  {
+    id: "add-car",
+    label: "ADD CAR",
+    icon: <Car className="text-sm" />,
+    href: "/addCar",
+  },
+  {
+    id: "my-bookings",
+    label: "MY BOOKINGS",
+    icon: <FaCalendar className="text-sm" />,
+    href: "/myBookings",
+  },
+  {
+    id: "my-added-cars",
+    label: "MY ADDED CARS",
+    icon: <FiList className="text-sm" />,
+    href: "/myAddedCars",
+  },
 ];
 
 const UserMenu = ({ user }) => {
@@ -20,14 +35,16 @@ const UserMenu = ({ user }) => {
   const fallbackLetter = name ? name.charAt(0).toUpperCase() : "U";
   const pathname = usePathname();
 
- const handleLogOut = async () => {
+  const handleLogOut = async () => {
     await authClient.signOut();
     window.location.href = "/login";
-  };  
+  };
 
   return (
-    <Dropdown placement="bottom-end" classNames={{ content: "!origin-top-right" }}>
-
+    <Dropdown
+      placement="bottom-end"
+      classNames={{ content: "!origin-top-right" }}
+    >
       {/* Trigger */}
       <Dropdown.Trigger className="rounded-full cursor-pointer outline-none">
         <div className="p-[2px] rounded-full border border-[#C9A84C]/40 bg-[#16161D] hover:border-[#C9A84C] transition-all duration-300">
@@ -41,8 +58,7 @@ const UserMenu = ({ user }) => {
       </Dropdown.Trigger>
 
       {/* Popover */}
-      <Dropdown.Popover className="bg-[#0D0D12] border border-[#C9A84C]/20 rounded-[20px] sm:rounded-[28px] w-[85vw] sm:w-[300px] md:w-[320px] p-3 md:p-6 text-[#e4e1e9] shadow-[0_10px_40px_rgba(0,0,0,0.7)]">
-
+      <Dropdown.Popover className="bg-[#0D0D12] border border-[#C9A84C]/20 rounded-[20px] md:rounded-[28px] w-[85vw] sm:w-[300px] md:w-[320px] p-3 md:p-6 text-[#e4e1e9] shadow-[0_10px_40px_rgba(0,0,0,0.7)]">
         {/* User Info */}
         <div className="flex flex-col items-center text-center mt-1 mb-4 sm:mt-2 sm:mb-5">
           <div className="p-1 rounded-full border-2 border-[#C9A84C]/40 mb-2 sm:mb-3 bg-[#16161D]">
@@ -65,7 +81,6 @@ const UserMenu = ({ user }) => {
         </div>
 
         <Dropdown.Menu className="flex flex-col gap-2 p-0 w-full">
-
           {/* Theme Toggle */}
           <Dropdown.Item
             id="theme"
@@ -144,13 +159,13 @@ const UserMenu = ({ user }) => {
             className="w-full p-0 mt-2 md:mt-3 bg-transparent hover:bg-transparent focus:bg-transparent"
           >
             <div
-           onClick={handleLogOut}
-            className="w-full flex items-center justify-center gap-2 border border-[#C9A84C]/40 hover:bg-[#C9A84C]/10 rounded-full py-2.5 sm:py-3 text-[10px] sm:text-xs font-bold tracking-[0.15em] uppercase text-[#C9A84C] hover:text-white transition-all duration-300 cursor-pointer active:scale-[0.98]">
+              onClick={handleLogOut}
+              className="w-full flex items-center justify-center gap-2 border border-[#C9A84C]/40 hover:bg-[#C9A84C]/10 rounded-full py-2.5 sm:py-3 text-[10px] sm:text-xs font-bold tracking-[0.15em] uppercase text-[#C9A84C] hover:text-white transition-all duration-300 cursor-pointer active:scale-[0.98]"
+            >
               <ArrowRightFromSquare className="size-3 sm:size-3.5 shrink-0" />
-              <span >LOGOUT</span>
+              <span>LOGOUT</span>
             </div>
           </Dropdown.Item>
-
         </Dropdown.Menu>
       </Dropdown.Popover>
     </Dropdown>
