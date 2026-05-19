@@ -44,7 +44,7 @@ const user = session?.user
             {
               user ? (
                 <div>
-                <UserMenu />
+                <UserMenu user={user}/>
                 </div>
                 
               ):<Link href="/login"><Button className={'bg-yellow-600 rounded-md'}>Login</Button></Link>

@@ -37,6 +37,14 @@ const LogInPage = () => {
     }
   };
 
+
+  const googleSignIn = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
+  };
+
+
   return (
     <div className="flex h-screen items-center justify-center">
       <div className="flex items-center gap-10 bg-[#0A0A0F]/80 border border-[#C9A84C]/20  p-5 md:p-10 rounded-md shadow-[0_0_16px_rgba(201,168,76,0.25)]">
@@ -186,6 +194,7 @@ const LogInPage = () => {
 
             {/* Google Button */}
             <button
+              onClick={googleSignIn}
               type="button"
               className="relative w-full cursor-pointer flex items-center justify-center gap-2.5 border border-white/30 rounded-full py-2.5 text-[11px] font-medium tracking-wide text-white/60 overflow-hidden hover:border-yellow-600/30 hover:bg-white/[0.03] transition-all before:absolute before:top-0 before:left-[-100%] before:w-full before:h-full
               before:bg-gradient-to-r before:from-transparent 
