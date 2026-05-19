@@ -11,7 +11,7 @@ import NavbarMenu from "./NavbarMenu";
 const Navbar = async () => {
   const links = [
     { name: "Home", path: "/" },
-    { name: "Explore Car", path: "/exploreCar" },
+    { name: "Explore Car", path: "/exploreCars" },
     { name: "Add Car", path: "/addCar" },
     { name: "My Bookings", path: "/myBookings" },
   ];
