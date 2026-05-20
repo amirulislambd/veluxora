@@ -1,17 +1,11 @@
-import AddCarForm from "@/components/addCar/AddCarForm";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+import UpdateCollection from "@/components/MyAddedCars/UpdateCollection";
+import React from "react";
 
-const AddCarPage = async () => {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-  const user = session?.user;
-  const res = await fetch(
-    `http://localhost:5000/MyAddedCars?email=${user?.email}`,
-  );
-  const cars = await res.json();
-  console.log(cars);
+const UpdatePage = async ({ params }) => {
+
+  const { id } = await params;
+  const res = await fetch(`http://localhost:5000/cars/${id}`);
+  const car = await res.json();
   return (
     <div className="min-h-screen bg-[#131318] text-[#e4e1e9]">
       <style>{`
@@ -29,19 +23,19 @@ const AddCarPage = async () => {
             className="text-[56px] md:text-[80px] leading-none tracking-tight text-[#e6c364] mb-4"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
-            New Acquisition
+            Update Vehicle
           </h1>
           <p className="text-lg text-[#d0c5b2] max-w-2xl leading-relaxed">
-            Commission your machine into the fleet. Provide the technical soul
-            and aesthetic essence of your automotive masterpiece.
+            Refine your listing — update the details, pricing, and availability
+            of your machine within the Veluxora fleet.
           </p>
         </header>
 
         {/* Client form */}
-        <AddCarForm user={user} />
+        <UpdateCollection user={car} />
       </main>
     </div>
   );
 };
 
-export default AddCarPage;
+export default UpdatePage;

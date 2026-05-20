@@ -1,5 +1,7 @@
 "use client";
 import { ResponseImgBb } from "@/lib/dataFecth";
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -24,10 +26,11 @@ const SectionHeader = ({ title }) => (
   </div>
 );
 
-const AddCarForm = ({ user }) => {
-  console.log(user);
-  const { email, image, name, _id } = user;
-  const router = useRouter();
+const UpdateCollection = ({ user }) => {
+  const {image,car_name,car_type,daily_rent_price,seat_capacity,pickup_location,description,_id } = user;
+
+const router = useRouter();
+
   const [availability, setAvailability] = useState(true);
   const [previewImg, setPreviewImg] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -60,9 +63,6 @@ const AddCarForm = ({ user }) => {
       }
 
       const carData = {
-        owner_email: email,
-        owner_name: name,
-        owner_image: image,
         car_name: data.carName,
         car_type: data.carType,
         daily_rent_price: Number(data.dailyRent),
@@ -71,30 +71,28 @@ const AddCarForm = ({ user }) => {
         description: data.description,
         image: uploadImg,
         availability_status: availability,
-        booking_count: 0,
+        // booking_count: 0,
         created_at: new Date(),
       };
 
-      const res = await fetch(`http://localhost:5000/cars`, {
-        method: "POST",
+      const res = await fetch(`http://localhost:5000/cars/${_id}`, {
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(carData),
       });
 
       if (!res.ok) {
-        toast.error("Server error! Try again.");
+        toast.error("Something went wrong!");
         return;
       }
 
       const responseData = await res.json();
 
-      if (responseData?.insertedId) {
-        toast.success("Vehicle listed successfully! 🚗");
+      if (responseData?.modifiedCount > 0) {
+        toast.success("Car updated successfully!");
         reset();
         router.refresh();
-        router.push(
-          `http://localhost:3000/exploreCars/${responseData.insertedId}`,
-        );
+        router.push(`http://localhost:3000/exploreCars/${_id}`);
         setPreviewImg(null);
       } else {
         toast.error("Something went wrong!");
@@ -122,7 +120,9 @@ const AddCarForm = ({ user }) => {
                   className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
                 />
               ) : (
-                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=800')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-500" >
+                    <Image src={image} alt="bg" fill />
+                </div>
               )}
               <div className="relative z-10 flex flex-col items-center text-center p-12">
                 <FiUpload
@@ -190,6 +190,7 @@ const AddCarForm = ({ user }) => {
               <div className="flex flex-col gap-2">
                 <label className={labelClass}>Car Name</label>
                 <input
+                defaultValue={car_name}
                   className={inputClass}
                   placeholder="e.g. Aston Martin DBS"
                   {...register("carName", { required: "Car name is required" })}
@@ -202,11 +203,12 @@ const AddCarForm = ({ user }) => {
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className={labelClass}>Car Type</label>
-                <select
+                <label
+                className={labelClass}>Car Type</label>
+                <select   
+                defaultValue={car_type }
                   className={`${inputClass} appearance-none cursor-pointer`}
                   style={{ fontSize: "18px" }}
-                  defaultValue=""
                   {...register("carType", { required: "Car type is required" })}
                 >
                   <option value="" disabled className="bg-[#131318]">
@@ -235,6 +237,7 @@ const AddCarForm = ({ user }) => {
               <div className="flex flex-col gap-2">
                 <label className={labelClass}>Seat Capacity</label>
                 <input
+                defaultValue={seat_capacity}
                   type="number"
                   className={inputClass}
                   placeholder="e.g. 4"
@@ -253,6 +256,7 @@ const AddCarForm = ({ user }) => {
               <div className="flex flex-col gap-2">
                 <label className={labelClass}>Pickup Location</label>
                 <input
+                defaultValue={pickup_location}
                   className={inputClass}
                   placeholder="e.g. Beverly Hills, CA"
                   {...register("location", {
@@ -282,6 +286,7 @@ const AddCarForm = ({ user }) => {
                     $
                   </span>
                   <input
+                  defaultValue={daily_rent_price}
                     type="number"
                     className="bg-transparent border-0 py-3 px-0 text-2xl text-[#e4e1e9] placeholder:text-[#35343a] w-full outline-none"
                     placeholder="1,200"
@@ -332,6 +337,7 @@ const AddCarForm = ({ user }) => {
             <div className="flex flex-col gap-3">
               <label className={labelClass}>Description</label>
               <textarea
+                defaultValue={description}
                 className="bg-[#1f1f25]/30 border border-[#4d4637]/30 p-6 text-base text-[#e4e1e9] placeholder:text-[#35343a] focus:outline-none focus:border-[#e6c364] transition-all resize-none leading-relaxed"
                 placeholder="Describe the machine's soul..."
                 rows={5}
@@ -348,34 +354,47 @@ const AddCarForm = ({ user }) => {
           </section>
 
           {/* Actions */}
-          <div className="flex items-center justify-end gap-8 pt-4">
-            <button
-              type="button"
-              onClick={() => {
-                reset();
-                setPreviewImg(null);
-              }}
-              className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#d0c5b2] hover:text-[#e6c364] transition-colors"
-            >
-              Save as Draft
-            </button>
-            <button
-              type="submit"
-              disabled={loading}
-              className={`text-[11px] font-bold tracking-[0.3em] uppercase py-5 px-14 transition-all duration-300 cursor-pointer
-                ${
-                  loading
-                    ? "bg-[#4d4637] text-[#888] cursor-not-allowed"
-                    : "bg-[#e6c364] text-[#3d2e00] hover:brightness-110 active:scale-95"
-                }`}
-            >
-              {loading ? "Listing..." : "List Vehicle"}
-            </button>
-          </div>
+<div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-3 sm:gap-6 pt-4">
+  
+  {/* Cancel */}
+  <Link
+    href="/myAddedCars"
+    className="flex items-center justify-center px-6 py-3 border border-[#4d4637] text-[11px] font-semibold tracking-[0.2em] uppercase text-[#d0c5b2] hover:border-[#e6c364]/50 hover:text-[#e6c364] transition-all duration-300 rounded-sm"
+  >
+    Cancel
+  </Link>
+
+  {/* Reset */}
+  <button
+    type="button"
+    onClick={() => { reset(); setPreviewImg(null); }}
+    className="flex items-center justify-center px-6 py-3 border border-[#4d4637] text-[11px] font-semibold tracking-[0.2em] uppercase text-[#d0c5b2] hover:border-[#e6c364]/50 hover:text-[#e6c364] transition-all duration-300 rounded-sm"
+  >
+    Reset
+  </button>
+
+  {/* Submit */}
+  <button
+    type="submit"
+    disabled={loading}
+    className={`flex items-center justify-center px-10 py-3 text-[11px] font-bold tracking-[0.3em] uppercase transition-all duration-300 rounded-sm
+      ${loading
+        ? "bg-[#4d4637] text-[#888] cursor-not-allowed"
+        : "bg-[#e6c364] text-[#3d2e00] hover:brightness-110 active:scale-95 cursor-pointer"
+      }`}
+  >
+    {loading ? (
+      <span className="flex items-center gap-2">
+        <span className="w-3 h-3 border border-[#888] border-t-transparent rounded-full animate-spin" />
+        Updating...
+      </span>
+    ) : "Save Changes"}
+  </button>
+</div>
         </div>
       </div>
     </form>
   );
 };
 
-export default AddCarForm;
+export default UpdateCollection;
