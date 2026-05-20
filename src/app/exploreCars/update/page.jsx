@@ -1,9 +1,6 @@
 "use client";
-
 import { useState } from "react";
-import Image from "next/image";
-
-export default function UpdateCollection({car}) {
+export default function UpdateCollection({ car }) {
   const [availability, setAvailability] = useState(true);
   const [dailyRate, setDailyRate] = useState("1250");
 
@@ -62,8 +59,7 @@ export default function UpdateCollection({car}) {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage:
-              `url(${car})`,
+            backgroundImage: `url(${car})`,
           }}
         />
         {/* Subtle dark vignette */}
@@ -73,7 +69,13 @@ export default function UpdateCollection({car}) {
         <div className="absolute inset-0 flex items-center justify-center">
           <button className="flex items-center gap-2 bg-[#c9a84c] text-[#1a1a1a] text-[11px] font-bold tracking-[0.15em] uppercase px-4 py-2 rounded-full hover:bg-[#e0bc6a] transition-colors shadow-lg">
             <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-              <circle cx="6.5" cy="6.5" r="2.5" stroke="#1a1a1a" strokeWidth="1.3" />
+              <circle
+                cx="6.5"
+                cy="6.5"
+                r="2.5"
+                stroke="#1a1a1a"
+                strokeWidth="1.3"
+              />
               <rect
                 x="1"
                 y="3"
@@ -83,7 +85,12 @@ export default function UpdateCollection({car}) {
                 stroke="#1a1a1a"
                 strokeWidth="1.3"
               />
-              <path d="M4.5 3L5.5 1.5H7.5L8.5 3" stroke="#1a1a1a" strokeWidth="1.3" strokeLinejoin="round" />
+              <path
+                d="M4.5 3L5.5 1.5H7.5L8.5 3"
+                stroke="#1a1a1a"
+                strokeWidth="1.3"
+                strokeLinejoin="round"
+              />
             </svg>
             Change Photo
           </button>
@@ -144,7 +151,9 @@ export default function UpdateCollection({car}) {
                 <input
                   type="text"
                   value={vehicle.colorway}
-                  onChange={(e) => handleVehicleChange("colorway", e.target.value)}
+                  onChange={(e) =>
+                    handleVehicleChange("colorway", e.target.value)
+                  }
                   className="w-full bg-[#2d2d2d] text-white text-sm px-3 py-2.5 rounded-lg border border-transparent focus:border-[#c9a84c] focus:outline-none transition-colors"
                 />
               </div>
@@ -166,7 +175,9 @@ export default function UpdateCollection({car}) {
                   <input
                     type="text"
                     value={specs.horsepower}
-                    onChange={(e) => handleSpecChange("horsepower", e.target.value)}
+                    onChange={(e) =>
+                      handleSpecChange("horsepower", e.target.value)
+                    }
                     className="w-full bg-[#2d2d2d] text-white text-sm px-3 py-2.5 pr-10 rounded-lg border border-transparent focus:border-[#c9a84c] focus:outline-none transition-colors"
                   />
                   <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-[#555] font-bold tracking-wider uppercase">
@@ -183,7 +194,9 @@ export default function UpdateCollection({car}) {
                   <input
                     type="text"
                     value={specs.topSpeed}
-                    onChange={(e) => handleSpecChange("topSpeed", e.target.value)}
+                    onChange={(e) =>
+                      handleSpecChange("topSpeed", e.target.value)
+                    }
                     className="w-full bg-[#2d2d2d] text-white text-sm px-3 py-2.5 pr-12 rounded-lg border border-transparent focus:border-[#c9a84c] focus:outline-none transition-colors"
                   />
                   <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-[#555] font-bold tracking-wider uppercase">
@@ -200,7 +213,9 @@ export default function UpdateCollection({car}) {
                   <input
                     type="text"
                     value={specs.zeroToSixty}
-                    onChange={(e) => handleSpecChange("zeroToSixty", e.target.value)}
+                    onChange={(e) =>
+                      handleSpecChange("zeroToSixty", e.target.value)
+                    }
                     className="w-full bg-[#2d2d2d] text-white text-sm px-3 py-2.5 pr-10 rounded-lg border border-transparent focus:border-[#c9a84c] focus:outline-none transition-colors"
                   />
                   <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-[#555] font-bold tracking-wider uppercase">
@@ -217,7 +232,9 @@ export default function UpdateCollection({car}) {
           {/* Availability */}
           <div className="bg-[#232323] rounded-2xl p-5">
             <div className="flex items-start justify-between mb-1">
-              <h2 className="text-white font-semibold text-base">Availability</h2>
+              <h2 className="text-white font-semibold text-base">
+                Availability
+              </h2>
               {/* Toggle */}
               <button
                 onClick={() => setAvailability((v) => !v)}
@@ -245,7 +262,9 @@ export default function UpdateCollection({car}) {
                 onChange={(e) => setDailyRate(e.target.value)}
                 className="flex-1 bg-transparent text-white text-sm focus:outline-none min-w-0"
               />
-              <span className="text-[#555] text-xs font-bold tracking-wider">USD</span>
+              <span className="text-[#555] text-xs font-bold tracking-wider">
+                USD
+              </span>
             </div>
           </div>
 
