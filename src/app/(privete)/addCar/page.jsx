@@ -1,6 +1,13 @@
 import AddCarForm from "@/components/addCar/AddCarForm";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
-const AddCarPage = () => {
+const AddCarPage = async () => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  const user = session?.user;
+  // console.log(user);
   return (
     <div className="min-h-screen bg-[#131318] text-[#e4e1e9]">
       <style>{`
@@ -27,7 +34,7 @@ const AddCarPage = () => {
         </header>
 
         {/* Client form */}
-        <AddCarForm />
+        <AddCarForm user={user} />
       </main>
     </div>
   );

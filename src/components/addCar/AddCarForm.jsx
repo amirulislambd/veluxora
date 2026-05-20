@@ -23,15 +23,17 @@ const SectionHeader = ({ title }) => (
   </div>
 );
 
-const AddCarForm = () => {
+const AddCarForm = ({ user }) => {
+  const { email, image, name } = user;
+
   const [availability, setAvailability] = useState(true);
   const [previewImg, setPreviewImg] = useState(null);
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
     handleSubmit,
-    reset, 
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -39,7 +41,6 @@ const AddCarForm = () => {
     setLoading(true);
 
     try {
-     
       let uploadImg = data?.imageURL || "";
 
       if (data?.photoFile?.[0]) {
@@ -56,32 +57,28 @@ const AddCarForm = () => {
         return;
       }
 
-      
       const carData = {
+        owner_email: email,
+        owner_name: name,
+        owner_image: image,
         car_name: data.carName,
         car_type: data.carType,
-        daily_rent_price: Number(data.dailyRent), 
-        seat_capacity: Number(data.seatCapacity), 
+        daily_rent_price: Number(data.dailyRent),
+        seat_capacity: Number(data.seatCapacity),
         pickup_location: data.location,
         description: data.description,
         image: uploadImg,
         availability_status: availability,
-        booking_count: 0, 
+        booking_count: 0,
         created_at: new Date(),
       };
 
-      
-      const res = await fetch(
-        `http://localhost:5000/cars`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(carData),
-          
-        }
-      );
+      const res = await fetch(`http://localhost:5000/cars`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(carData),
+      });
 
-      
       if (!res.ok) {
         toast.error("Server error! Try again.");
         return;
@@ -96,19 +93,17 @@ const AddCarForm = () => {
       } else {
         toast.error("Something went wrong!");
       }
-
     } catch (error) {
       console.error("Submit error:", error);
       toast.error("Network error! Try again.");
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="grid grid-cols-12 gap-6">
-
         {/* ── LEFT: Image Upload ── */}
         <div className="col-span-12 lg:col-span-5">
           <div className="sticky top-24">
@@ -140,7 +135,6 @@ const AddCarForm = () => {
               </div>
               <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#e6c364] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
 
-              
               <input
                 type="file"
                 accept="image/*"
@@ -183,7 +177,6 @@ const AddCarForm = () => {
 
         {/* ── RIGHT: Form Fields ── */}
         <div className="col-span-12 lg:col-span-7 space-y-10">
-
           {/* Vehicle Identity */}
           <section className="glass-panel p-8 md:p-12 space-y-10">
             <SectionHeader title="Vehicle Identity" />
@@ -207,13 +200,20 @@ const AddCarForm = () => {
                 <select
                   className={`${inputClass} appearance-none cursor-pointer`}
                   style={{ fontSize: "18px" }}
-                  defaultValue="" 
+                  defaultValue=""
                   {...register("carType", { required: "Car type is required" })}
                 >
                   <option value="" disabled className="bg-[#131318]">
                     Select type
                   </option>
-                  {["SUV", "Sedan", "Hatchback", "Luxury", "Convertible", "Sports"].map((t) => (
+                  {[
+                    "SUV",
+                    "Sedan",
+                    "Hatchback",
+                    "Luxury",
+                    "Convertible",
+                    "Sports",
+                  ].map((t) => (
                     <option key={t} value={t} className="bg-[#131318]">
                       {t}
                     </option>
@@ -249,7 +249,9 @@ const AddCarForm = () => {
                 <input
                   className={inputClass}
                   placeholder="e.g. Beverly Hills, CA"
-                  {...register("location", { required: "Location is required" })}
+                  {...register("location", {
+                    required: "Location is required",
+                  })}
                 />
                 {errors.location && (
                   <p style={{ color: "#f87171", fontSize: "11px" }}>
@@ -298,7 +300,9 @@ const AddCarForm = () => {
                       Availability Status
                     </span>
                     <span className="text-[10px] text-[#d0c5b2] uppercase tracking-wider">
-                      {availability ? "Available for booking" : "Currently unavailable"}
+                      {availability
+                        ? "Available for booking"
+                        : "Currently unavailable"}
                     </span>
                   </div>
                   <button
@@ -325,7 +329,9 @@ const AddCarForm = () => {
                 className="bg-[#1f1f25]/30 border border-[#4d4637]/30 p-6 text-base text-[#e4e1e9] placeholder:text-[#35343a] focus:outline-none focus:border-[#e6c364] transition-all resize-none leading-relaxed"
                 placeholder="Describe the machine's soul..."
                 rows={5}
-                {...register("description", { required: "Description is required" })}
+                {...register("description", {
+                  required: "Description is required",
+                })}
               />
               {errors.description && (
                 <p style={{ color: "#f87171", fontSize: "11px" }}>
@@ -339,18 +345,22 @@ const AddCarForm = () => {
           <div className="flex items-center justify-end gap-8 pt-4">
             <button
               type="button"
-              onClick={() => { reset(); setPreviewImg(null); }}
+              onClick={() => {
+                reset();
+                setPreviewImg(null);
+              }}
               className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#d0c5b2] hover:text-[#e6c364] transition-colors"
             >
               Save as Draft
             </button>
             <button
               type="submit"
-              disabled={loading} 
+              disabled={loading}
               className={`text-[11px] font-bold tracking-[0.3em] uppercase py-5 px-14 transition-all duration-300 cursor-pointer
-                ${loading
-                  ? "bg-[#4d4637] text-[#888] cursor-not-allowed"
-                  : "bg-[#e6c364] text-[#3d2e00] hover:brightness-110 active:scale-95"
+                ${
+                  loading
+                    ? "bg-[#4d4637] text-[#888] cursor-not-allowed"
+                    : "bg-[#e6c364] text-[#3d2e00] hover:brightness-110 active:scale-95"
                 }`}
             >
               {loading ? "Listing..." : "List Vehicle"}
