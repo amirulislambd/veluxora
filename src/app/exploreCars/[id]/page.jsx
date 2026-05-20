@@ -9,6 +9,8 @@ const DetailsPage = async ({ params }) => {
   const { id } = await params;
   const res = await fetch(`http://localhost:5000/cars/${id}`);
   const car = await res.json();
+  const res2 = await fetch("http://localhost:5000/bookings");
+  const bookings = await res2.json();
 
   const specs = [
     { icon: <FiUsers />, label: "Seats", value: car.seat_capacity },
@@ -20,7 +22,11 @@ const DetailsPage = async ({ params }) => {
       label: "Transmission",
       value: car.transmission || "Automatic",
     },
-    { icon: <FiZap />, label: "Bookings", value: `${car.booking_count} times` },
+    {
+      icon: <FiZap />,
+      label: "Bookings",
+      value: `${bookings.filter((b) => b.car_id === car._id).length} times`,
+    },
   ];
 
   return (

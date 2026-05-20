@@ -1,7 +1,17 @@
 import MyAddedCarsClient from "@/components/MyAddedCars/MyAddedCarsClient";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 const MyAddedCarsPage = async () => {
-  const res = await fetch(`http://localhost:5000/cars`, { cache: "no-store" });
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  const user = session?.user;
+
+  const res = await fetch(
+    `http://localhost:5000/MyAddedCars?email=${user?.email}`,
+    { cache: "no-store" },
+  );
   const cars = await res.json();
 
   // Stats calculate
