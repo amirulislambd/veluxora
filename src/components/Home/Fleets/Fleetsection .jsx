@@ -9,7 +9,7 @@ const FleetSection = async () => {
 
   return (
     <section className="pt-32 pb-16 overflow-hidden">
-      <div className=" px-4  mb-16 flex justify-between items-end">
+      <div className=" px-4  mb-16 flex flex-col md:flex-row justify-between items-end">
         <div>
           <span className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#e6c364] mb-4 block">
             THE COLLECTION
@@ -29,7 +29,7 @@ const FleetSection = async () => {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mx-3">
         {cars.map((car) => (
           <ExploreCarsCard key={car.id} car={car} />
         ))}
