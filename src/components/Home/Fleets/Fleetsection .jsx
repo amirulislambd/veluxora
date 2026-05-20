@@ -1,15 +1,15 @@
+import ExploreCarsCard from "@/components/ExploreCars/ExploreCarsCard";
 import Link from "next/link";
-import FleetScroll from "./Fleetscrol";
 
 const FleetSection = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/cars`, {
+  const res = await fetch(`http://localhost:5000/featured`, {
     cache: "no-store",
   });
   const cars = await res.json();
 
   return (
-    <section className="py-32 overflow-hidden">
-      <div className="max-w-[1440px] mx-auto px-4 md:px-16 mb-16 flex justify-between items-end">
+    <section className="pt-32 pb-16 overflow-hidden">
+      <div className=" px-4  mb-16 flex justify-between items-end">
         <div>
           <span className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#e6c364] mb-4 block">
             THE COLLECTION
@@ -29,8 +29,11 @@ const FleetSection = async () => {
         </Link>
       </div>
 
-      {/* Client scroll component */}
-      <FleetScroll cars={cars} />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {cars.map((car) => (
+          <ExploreCarsCard key={car.id} car={car} />
+        ))}
+      </div>
     </section>
   );
 };

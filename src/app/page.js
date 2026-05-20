@@ -9,7 +9,6 @@ export default function Home() {
     <div>
       <main className="container mx-auto">
         <Hero />
-        {/* <SearchBar /> */}
         <FleetSection />
         <WhyChooseUs />
         <HowItWorks />

@@ -25,12 +25,12 @@ const ExploreCars = async () => {
           <div className="relative z-30 container mx-auto px-gutter w-full">
             <div className="flex flex-col justify-center items-center">
               <h1
-                className="text-primary italic font-headline-lg text-headline-lg mb-4 text-2xl md:text-4xl lg:text-5xl text-center font-bold tracking-tight text-yellow-400"
+                className="text-primary italic font-headline-lg text-headline-lg mb-4 text-2xl md:text-4xl lg:text-5xl text-center font-bold tracking-tight "
                 style={{ fontFamily: "'Playfair Display', serif" }}
               >
                 Explore the Fleet
               </h1>
-              <p className="text-lg  max-w-2xl leading-relaxed text-center text-yellow-400/80">
+              <p className="text-lg  max-w-2xl leading-relaxed text-center ">
                 Discover a world of automotive excellence. Our vast collection
                 of high-performance vehicles is designed to captivate and
                 inspire.
