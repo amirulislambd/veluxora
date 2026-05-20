@@ -191,7 +191,6 @@ const DetailsPage = async ({ params }) => {
               {/* Divider */}
               <div className="h-px bg-[#e6c364]/10" />
 
-              {/* Book Button — Client Component */}
               <BookingModal car={car} />
 
               {/* Note */}

@@ -24,15 +24,11 @@ const BookingModal = ({ car }) => {
         status: "Confirmed",
       };
 
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/bookings`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(bookingData),
-          credentials: "include",
-        }
-      );
+      const res = await fetch(`http://localhost:5000/bookings`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bookingData),
+      });
 
       if (!res.ok) {
         toast.error("Booking failed! Please login first.");
