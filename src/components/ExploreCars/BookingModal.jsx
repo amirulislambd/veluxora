@@ -96,7 +96,6 @@ const BookingModal = ({ car }) => {
             <div className="flex">
               {/* ── LEFT: Car Image + Info ── */}
               <div className="relative w-[240px] min-h-[420px] shrink-0 hidden md:block">
-                {/* ✅ Next.js Image */}
                 <Image
                   src={car.image}
                   alt={car.car_name}
