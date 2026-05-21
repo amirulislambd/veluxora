@@ -9,8 +9,8 @@ const DetailsPage = async ({ params }) => {
   const { id } = await params;
   const res = await fetch(`http://localhost:5000/cars/${id}`);
   const car = await res.json();
-  const res2 = await fetch("http://localhost:5000/bookings");
-  const bookings = await res2.json();
+  // const res2 = await fetch("http://localhost:5000/bookings");
+  // const bookings = await res2.json();
 
   const specs = [
     { icon: <FiUsers />, label: "Seats", value: car.seat_capacity },
@@ -25,7 +25,7 @@ const DetailsPage = async ({ params }) => {
     {
       icon: <FiZap />,
       label: "Bookings",
-      value: `${bookings.filter((b) => b.car_id === car._id).length} times`,
+      value: `${car._id.length} times`,
     },
   ];
 
@@ -210,6 +210,6 @@ const DetailsPage = async ({ params }) => {
       </section>
     </main>
   );
-};
+};;
 
 export default DetailsPage;

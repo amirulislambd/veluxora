@@ -8,10 +8,20 @@ const MyAddedCarsPage = async () => {
   });
   const user = session?.user;
 
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+
   const res = await fetch(
     `http://localhost:5000/MyAddedCars?email=${user?.email}`,
-    { cache: "no-store" },
+    {
+      cache: "no-store",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    },
   );
+  
   const cars = await res.json();
 
   // Stats calculate

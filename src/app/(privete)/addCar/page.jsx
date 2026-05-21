@@ -7,11 +7,7 @@ const AddCarPage = async () => {
     headers: await headers(),
   });
   const user = session?.user;
-  const res = await fetch(
-    `http://localhost:5000/MyAddedCars?email=${user?.email}`,
-  );
-  const cars = await res.json();
-  console.log(cars);
+
   return (
     <div className="min-h-screen bg-[#131318] text-[#e4e1e9]">
       <style>{`

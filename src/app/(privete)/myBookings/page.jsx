@@ -1,8 +1,18 @@
 import BookingCard from "@/components/MyBookings/bookingCard";
 import EmptyBookings from "@/components/MyBookings/EmptyBookings";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 const MyBookingsPage = async () => {
-  const res = await fetch(`http://localhost:5000/bookings`);
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+
+  const res = await fetch(`http://localhost:5000/bookings`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
   const bookings = await res.json();
   //   console.log(data);
 

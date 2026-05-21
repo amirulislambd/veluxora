@@ -1,7 +1,9 @@
 import ExploreCarsCard from "@/components/ExploreCars/ExploreCarsCard";
-import Image from "next/image";
+
 
 const ExploreCars = async () => {
+
+
   const res = await fetch(`http://localhost:5000/cars`, {
     headers: {
       "Content-Type": "application/json",
@@ -41,7 +43,7 @@ const ExploreCars = async () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 container mx-auto p-4">
         {data.map((car) => (
-          <ExploreCarsCard car={car} key={car._id} />
+          <ExploreCarsCard car={car} key={car._iid} />
         ))}
       </div>
     </div>
