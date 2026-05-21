@@ -1,6 +1,5 @@
 import ExploreCarsCard from "@/components/ExploreCars/ExploreCarsCard";
 
-
 export const metadata = {
   title: "Explore the Fleet | VELUXORA — High-Performance Supercars",
   description:
@@ -28,6 +27,7 @@ export const metadata = {
     ],
   },
 };
+
 
 const ExploreCars = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/cars`, {
