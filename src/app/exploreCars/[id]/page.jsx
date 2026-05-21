@@ -5,6 +5,34 @@ import { GiSteeringWheel } from "react-icons/gi";
 import { BsFuelPump } from "react-icons/bs";
 import BookingModal from "@/components/ExploreCars/BookingModal";
 
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/cars/${id}`);
+    const car = await res.json();
+
+    if (!car) return { title: "Vehicle Not Found | VELUXORA" };
+
+    return {
+      title: `${car.car_name} Rent in ${car.pickup_location} | VELUXORA`,
+      description:
+        car.description ||
+        `Rent the high-performance ${car.car_name} on VELUXORA.`,
+      openGraph: {
+        title: `${car.car_name} — Premium Rental | VELUXORA`,
+        description: `Rent this ${car.car_name} for $${car.daily_rent_price}/day.`,
+        url: `https://veluxora.vercel.app/exploreCars/${id}`,
+        siteName: "VELUXORA",
+        images: [
+          { url: car.image, width: 1200, height: 630, alt: car.car_name },
+        ],
+      },
+    };
+  } catch (error) {
+    return { title: "Premium Luxury Fleet | VELUXORA" };
+  }
+}
+
 const DetailsPage = async ({ params }) => {
   const { id } = await params;
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/cars/${id}`);

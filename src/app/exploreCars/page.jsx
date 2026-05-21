@@ -1,9 +1,35 @@
 import ExploreCarsCard from "@/components/ExploreCars/ExploreCarsCard";
 
 
+export const metadata = {
+  title: "Explore the Fleet | VELUXORA — High-Performance Supercars",
+  description:
+    "Discover a world of automotive excellence. Browse Veluxora's exclusive and curated collection of high-performance luxury sports cars and SUVs.",
+  keywords: [
+    "Explore Cars",
+    "Luxury Fleet",
+    "Supercar Collection",
+    "Rent Sports Car",
+    "VELUXORA Fleet",
+  ],
+  openGraph: {
+    title: "Explore the Fleet | VELUXORA",
+    description:
+      "Discover a world of automotive excellence. Experience our premium collection of high-performance vehicles.",
+    url: "https://veluxora.vercel.app/exploreCars",
+    siteName: "VELUXORA",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "VELUXORA Luxury Fleet Showcase",
+      },
+    ],
+  },
+};
+
 const ExploreCars = async () => {
-
-
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/cars`, {
     headers: {
       "Content-Type": "application/json",
