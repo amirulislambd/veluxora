@@ -4,7 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
 
-const FleetCarCard = ({ car }) => {
+const FleetCarCard = ({ car, user }) => {
+  console.log(user);
   const [isHovered, setIsHovered] = useState(false);
 
   const {
@@ -143,13 +144,13 @@ const FleetCarCard = ({ car }) => {
         {/* Buttons */}
         <div className="grid grid-cols-2 gap-3 mt-auto">
           <Link href={`/exploreCars/${_id}`}>
-            <button className="border border-[#e6c364] text-[#e6c364] w-full py-3 rounded-full text-[10px] tracking-widest">
+            <button className="border border-[#e6c364] text-[#e6c364] w-full py-3 rounded-full text-[10px] tracking-widest cursor-pointer">
               View Details
             </button>
           </Link>
 
           <Link href={`/exploreCars/${_id}`}>
-            <button className="bg-[#e6c364] text-black w-full py-3 rounded-full text-[10px] tracking-widest">
+            <button className="bg-[#e6c364] text-black w-full py-3 rounded-full text-[10px] tracking-widest cursor-pointer">
               Reserve Now
             </button>
           </Link>

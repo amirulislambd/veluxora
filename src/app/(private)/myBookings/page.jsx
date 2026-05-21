@@ -17,14 +17,22 @@ const MyBookingsPage = async () => {
   const { token } = await auth.api.getToken({
     headers: await headers(),
   });
-
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookings`, {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
+  const session = await auth.api.getSession({
+    headers: await headers(),
   });
+  const user = session?.user;
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/bookings?email=${user?.email}`,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    },
+  );
   const bookings = await res.json();
-  //   console.log(data);
+  console.log(bookings);
 
   return (
     <main className="min-h-screen bg-[#0A0A0F] px-6 md:px-16 py-16">

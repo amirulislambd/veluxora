@@ -1,4 +1,7 @@
 import ExploreCarsCard from "@/components/ExploreCars/ExploreCarsCard";
+import { auth } from "@/lib/auth";
+
+import { headers } from "next/headers";
 
 export const metadata = {
   title: "Explore the Fleet | VELUXORA — High-Performance Supercars",
@@ -28,15 +31,20 @@ export const metadata = {
   },
 };
 
-
 const ExploreCars = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/cars`, {
     headers: {
       "Content-Type": "application/json",
     },
+    cache: "no-store",
   });
   const data = await res.json();
-  console.log(data);
+
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  const user = session?.user;
+
   return (
     <div className="">
       <div>
@@ -69,7 +77,7 @@ const ExploreCars = async () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 container mx-auto p-4">
         {data.map((car) => (
-          <ExploreCarsCard car={car} key={car._iid} />
+          <ExploreCarsCard car={car} key={car._iid} user={user} />
         ))}
       </div>
     </div>

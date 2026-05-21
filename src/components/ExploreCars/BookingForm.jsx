@@ -1,22 +1,40 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import toast from "react-hot-toast";
 
 const BookingForm = ({
-  car, dateRange, totalDays, totalPrice,
-  driverNeeded, setDriverNeeded,
-  note, setNote,
-  loading, setLoading,
+  car,
+  dateRange,
+  totalDays,
+  totalPrice,
+  driverNeeded,
+  setDriverNeeded,
+  note,
+  setNote,
+  loading,
+  setLoading,
   onClose,
 }) => {
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
+  console.log(user);
 
   const handleBooking = async () => {
     if (!dateRange?.from || !dateRange?.to) {
       toast.error("Please select booking dates!");
       return;
     }
+
+    if (!user) {
+      toast.error("Please login first to book a vehicle!");
+      return;
+    }
+
     setLoading(true);
     try {
       const bookingData = {
+        user_email: user.email,
+        user_name: user.name,
         car_id: car._id.toString(),
         car_name: car.car_name,
         car_image: car.image,
@@ -32,11 +50,14 @@ const BookingForm = ({
         status: "Pending",
       };
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookings`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(bookingData)
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/bookings`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(bookingData),
+        },
+      );
 
       if (!res.ok) {
         toast.error("Booking failed! Please login first.");
@@ -63,8 +84,12 @@ const BookingForm = ({
       {/* Driver Toggle */}
       <div className="flex items-center justify-between bg-[#1f1d2a] rounded-xl p-4">
         <div>
-          <p className="text-sm font-medium text-[#e4e1e9]">Professional Driver Needed</p>
-          <p className="text-[10px] text-[#6B6B7A] mt-0.5">Recommended for evening events</p>
+          <p className="text-sm font-medium text-[#e4e1e9]">
+            Professional Driver Needed
+          </p>
+          <p className="text-[10px] text-[#6B6B7A] mt-0.5">
+            Recommended for evening events
+          </p>
         </div>
         <button
           type="button"
@@ -73,7 +98,8 @@ const BookingForm = ({
             ${driverNeeded ? "bg-[#e6c364]" : "bg-[#3a3848]"}`}
           style={{ width: "52px" }}
         >
-          <span className={`absolute top-1 inline-block h-5 w-5 rounded-full shadow-md transition-transform duration-300
+          <span
+            className={`absolute top-1 inline-block h-5 w-5 rounded-full shadow-md transition-transform duration-300
             ${driverNeeded ? "translate-x-[28px] bg-[#0A0A0F]" : "translate-x-1 bg-[#6B6B7A]"}`}
           />
         </button>
@@ -97,7 +123,10 @@ const BookingForm = ({
       {dateRange?.from && dateRange?.to && (
         <div className="bg-[#1f1d2a] rounded-xl p-4 space-y-2">
           <div className="flex justify-between text-xs text-[#6B6B7A]">
-            <span>${car.daily_rent_price} × {totalDays} day{totalDays > 1 ? "s" : ""}</span>
+            <span>
+              ${car.daily_rent_price} × {totalDays} day
+              {totalDays > 1 ? "s" : ""}
+            </span>
             <span className="text-[#e4e1e9]">${totalPrice}</span>
           </div>
           {driverNeeded && (
@@ -119,9 +148,10 @@ const BookingForm = ({
         onClick={handleBooking}
         disabled={loading}
         className={`w-full py-4 rounded-full text-[11px] font-bold tracking-[0.3em] uppercase transition-all duration-300
-          ${loading
-            ? "bg-[#4d4637] text-[#888] cursor-not-allowed"
-            : "bg-[#e6c364] text-[#0A0A0F] hover:brightness-110 active:scale-[0.98] cursor-pointer"
+          ${
+            loading
+              ? "bg-[#4d4637] text-[#888] cursor-not-allowed"
+              : "bg-[#e6c364] text-[#0A0A0F] hover:brightness-110 active:scale-[0.98] cursor-pointer"
           }`}
       >
         {loading ? "Confirming..." : "Confirm Booking"}

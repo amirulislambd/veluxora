@@ -33,7 +33,6 @@ const CancelBookingBtn = ({ bookingId, carName, variant = "desktop" }) => {
 
   return (
     <>
-      {/* ── Trigger Button — variant অনুযায়ী ── */}
       {variant === "mobile" ? (
         // Mobile — full width
         <button
@@ -62,7 +61,6 @@ const CancelBookingBtn = ({ bookingId, carName, variant = "desktop" }) => {
             onClick={() => setConfirmOpen(false)}
           />
           <div className="relative z-10 bg-[#12121A] border border-[#f87171]/20 w-full max-w-sm p-8 rounded-sm space-y-6">
-
             {/* Icon */}
             <div className="w-12 h-12 rounded-full bg-[#f87171]/10 border border-[#f87171]/20 flex items-center justify-center mx-auto">
               <FiTrash2 className="text-[#f87171]" size={20} />
@@ -78,8 +76,8 @@ const CancelBookingBtn = ({ bookingId, carName, variant = "desktop" }) => {
               </h3>
               <p className="text-[#6B6B7A] text-sm leading-relaxed">
                 Are you sure you want to cancel{" "}
-                <span className="text-[#e4e1e9]">{carName}</span>?
-                This action cannot be undone.
+                <span className="text-[#e4e1e9]">{carName}</span>? This action
+                cannot be undone.
               </p>
             </div>
 
@@ -95,9 +93,10 @@ const CancelBookingBtn = ({ bookingId, carName, variant = "desktop" }) => {
                 onClick={handleCancel}
                 disabled={loading}
                 className={`flex-1 py-3 text-[11px] font-bold tracking-[0.2em] uppercase rounded-sm transition-all
-                  ${loading
-                    ? "bg-[#4d4637] text-[#888] cursor-not-allowed"
-                    : "bg-[#f87171] text-white hover:brightness-110 active:scale-95"
+                  ${
+                    loading
+                      ? "bg-[#4d4637] text-[#888] cursor-not-allowed"
+                      : "bg-[#f87171] text-white hover:brightness-110 active:scale-95"
                   }`}
               >
                 {loading ? "Cancelling..." : "Yes, Cancel"}
