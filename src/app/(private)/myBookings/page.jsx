@@ -3,6 +3,16 @@ import EmptyBookings from "@/components/MyBookings/EmptyBookings";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 
+export const metadata = {
+  title: "My Bookings | VELUXORA — Your Luxury Voyages",
+  description:
+    "Review your upcoming and past luxury car reservations and voyages inside the Veluxora ecosystem.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 const MyBookingsPage = async () => {
   const { token } = await auth.api.getToken({
     headers: await headers(),
