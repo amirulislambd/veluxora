@@ -31,7 +31,7 @@ const Navbar = async () => {
             </div>
             <div>
               <Link href="/">
-                <h1 className="uppercase text-2xl text-yellow-600">
+                <h1 className="uppercase text-2xl text-[#C9A84C] font-bold lg:font-extrabold">
                   Ve<span className="text-white">lux</span>ora
                 </h1>
               </Link>
@@ -53,7 +53,13 @@ const Navbar = async () => {
               </div>
             ) : (
               <Link href="/login">
-                <Button className={"bg-yellow-600 rounded-md"}>Login</Button>
+                <Button
+                  className={
+                    "bg-[#C9A84C] text-gray-800 font-bold  uppercase rounded-md"
+                  }
+                >
+                  Login
+                </Button>
               </Link>
             )}
           </div>
