@@ -95,7 +95,7 @@ const router = useRouter();
         toast.success("Car updated successfully!");
         reset();
         router.refresh();
-        router.push(`http://localhost:3000/exploreCars/${_id}`);
+        router.push(`https://veluxora.vercel.app/exploreCars/${_id}`);
         setPreviewImg(null);
       } else {
         toast.error("Something went wrong!");
