@@ -1,11 +1,41 @@
 import UpdateCollection from "@/components/MyAddedCars/UpdateCollection";
 import React from "react";
 
-const UpdatePage = async ({ params }) => {
 
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/cars/${id}`);
+    const car = await res.json();
+
+    if (!car) return { title: "Update Vehicle | VELUXORA" };
+
+    return {
+      title: `Update ${car.car_name} | VELUXORA — Fleet Management`,
+      description: `Refine your listing — update the details, pricing, and availability of your ${car.car_name} within the Veluxora fleet.`,
+
+      icons: {
+        icon: car.image || car.car_image || "/favicon.ico",
+      },
+
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  } catch (error) {
+    return {
+      title: "Update Vehicle | VELUXORA",
+      robots: { index: false, follow: false },
+    };
+  }
+}
+
+const UpdatePage = async ({ params }) => {
   const { id } = await params;
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/cars/${id}`);
   const car = await res.json();
+  console.log(car.image);
   return (
     <div className="min-h-screen bg-[#131318] text-[#e4e1e9]">
       <style>{`
