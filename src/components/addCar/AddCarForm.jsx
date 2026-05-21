@@ -93,7 +93,7 @@ const AddCarForm = ({ user }) => {
         reset();
         router.refresh();
         router.push(
-          `http://localhost:3000/exploreCars/${responseData.insertedId}`,
+          `https://veluxora.vercel.app/exploreCars/${responseData.insertedId}`,
         );
         setPreviewImg(null);
       } else {
