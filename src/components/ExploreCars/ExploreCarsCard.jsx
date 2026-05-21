@@ -4,8 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
 
-const FleetCarCard = ({ car, user }) => {
-  console.log(user);
+const FleetCarCard = ({ car }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const {
