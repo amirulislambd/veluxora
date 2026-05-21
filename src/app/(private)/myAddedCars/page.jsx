@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 export const metadata = {
   title: "My Fleet Management | VELUXORA — Host Dashboard",
   description:
-    "Manage your added high-performance vehicles, track fleet revenue, and monitor active luxury bookings within Veluxora.",
+    "Manage your added high-performance vehicles, track fleet revenue, and monitor active luxury bookings within Veluxora...",
   robots: {
     index: false,
     follow: false,
