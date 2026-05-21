@@ -2,6 +2,16 @@ import MyAddedCarsClient from "@/components/MyAddedCars/MyAddedCarsClient";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 
+export const metadata = {
+  title: "My Fleet Management | VELUXORA — Host Dashboard",
+  description:
+    "Manage your added high-performance vehicles, track fleet revenue, and monitor active luxury bookings within Veluxora.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 const MyAddedCarsPage = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
