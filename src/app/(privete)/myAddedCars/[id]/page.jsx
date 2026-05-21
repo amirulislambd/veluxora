@@ -4,7 +4,7 @@ import React from "react";
 const UpdatePage = async ({ params }) => {
 
   const { id } = await params;
-  const res = await fetch(`http://localhost:5000/cars/${id}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/cars/${id}`);
   const car = await res.json();
   return (
     <div className="min-h-screen bg-[#131318] text-[#e4e1e9]">

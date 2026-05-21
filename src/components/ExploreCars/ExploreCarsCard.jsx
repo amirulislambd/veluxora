@@ -62,9 +62,12 @@ const FleetCarCard = ({ car }) => {
             image ||
             "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800"
           }
-          alt={car_name}
+          alt={car_name || "Luxury Car"}
           fill
-          className={`object-cover transition-transform duration-700 ease-out ${isHovered ? "scale-105" : "scale-100"}`}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className={`object-cover transition-transform duration-700 ease-out ${
+            isHovered ? "scale-105" : "scale-100"
+          }`}
           priority
         />
 

@@ -4,7 +4,7 @@ import ExploreCarsCard from "@/components/ExploreCars/ExploreCarsCard";
 const ExploreCars = async () => {
 
 
-  const res = await fetch(`http://localhost:5000/cars`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/cars`, {
     headers: {
       "Content-Type": "application/json",
     },

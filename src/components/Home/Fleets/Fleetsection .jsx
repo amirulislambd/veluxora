@@ -2,7 +2,7 @@ import ExploreCarsCard from "@/components/ExploreCars/ExploreCarsCard";
 import Link from "next/link";
 
 const FleetSection = async () => {
-  const res = await fetch(`http://localhost:5000/featured`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/featured`, {
     cache: "no-store",
   });
   const cars = await res.json();

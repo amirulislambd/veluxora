@@ -75,7 +75,7 @@ const AddCarForm = ({ user }) => {
         created_at: new Date(),
       };
 
-      const res = await fetch(`http://localhost:5000/cars`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/cars`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(carData),

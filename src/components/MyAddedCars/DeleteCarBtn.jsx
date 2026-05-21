@@ -12,9 +12,12 @@ const DeleteCarBtn = ({ carId, carName }) => {
   const handleDelete = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/cars/${carId}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/cars/${carId}`,
+        {
+          method: "DELETE",
+        },
+      );
       const data = await res.json();
       if (data?.deletedCount > 0) {
         toast.success("Car deleted!");

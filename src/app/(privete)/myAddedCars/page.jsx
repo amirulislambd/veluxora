@@ -13,7 +13,7 @@ const MyAddedCarsPage = async () => {
   });
 
   const res = await fetch(
-    `http://localhost:5000/MyAddedCars?email=${user?.email}`,
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/MyAddedCars?email=${user?.email}`,
     {
       cache: "no-store",
       headers: {
