@@ -2,6 +2,17 @@ import AddCarForm from "@/components/addCar/AddCarForm";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 
+
+export const metadata = {
+  title: "Add New Vehicle | VELUXORA — Fleet Acquisition",
+  description:
+    "Commission your machine into the premium fleet. Provide the technical specifications and aesthetic essence of your automotive masterpiece.",
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
+
 const AddCarPage = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
