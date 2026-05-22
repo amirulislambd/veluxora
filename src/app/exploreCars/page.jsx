@@ -18,7 +18,7 @@ export const metadata = {
 
 // ─── Dynamic Server Component — re-renders per searchParams ────────────────
 async function CarList({ search, type, available }) {
-  // Backend-এ $regex/$in দিয়ে filter হবে
+
   const params = new URLSearchParams();
   if (search) params.set("search", search);
   if (type && type !== "All") params.set("type", type);
@@ -57,7 +57,7 @@ async function CarList({ search, type, available }) {
   );
 }
 
-// ─── Skeleton ───────────────────────────────────────────────────────────────
+
 function CarListSkeleton() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 container mx-auto p-4">
@@ -75,14 +75,14 @@ function CarListSkeleton() {
   );
 }
 
-// ─── Page ───────────────────────────────────────────────────────────────────
+
 const ExploreCars = async ({ searchParams }) => {
   const resolved = await searchParams;
   const search = resolved?.search || "";
   const type = resolved?.type || "";
   const available = resolved?.available || "";
 
-  // key বদলালে Suspense unmount+remount → নতুন server fetch
+
   const listKey = `${search}|${type}|${available}`;
 
   return (

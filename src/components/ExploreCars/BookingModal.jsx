@@ -15,6 +15,7 @@ const BookingModal = ({ car }) => {
     to: undefined,
   });
 
+
   const getTotalDays = () => {
     if (!dateRange?.from || !dateRange?.to) return 1;
     return (

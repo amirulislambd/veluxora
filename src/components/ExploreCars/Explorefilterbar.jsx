@@ -12,24 +12,22 @@ export default function ExploreFilterBar() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-
-  // 🎯 URL থেকে ডিফল্ট ভ্যালু রিড করা হচ্ছে যাতে পেজ রিফ্রেশে ফিল্টার মুছে না যায়
   const [carType, setCarType] = useState(searchParams.get("type") || "All");
   const [availability, setAvailability] = useState(searchParams.get("available") || "All");
   const [search, setSearch] = useState(searchParams.get("search") || "");
   const [layout, setLayout] = useState("grid");
 
-  // 🎯 Search debounce — 400ms পর URL আপডেট হবে
+
   const debounceRef = useRef(null);
 
-  // 🎯 URL পুশ করার মেইন ফাংশন
+ 
   const updateQueryParams = (key, value, currentParams) => {
     const params = new URLSearchParams(currentParams ?? searchParams.toString());
     
     if (value && value !== "All") {
       params.set(key, value);
     } else {
-      params.delete(key); // "All" বা খালি হলে ইউআরএল ক্লিন রাখার জন্য ডিলিট
+      params.delete(key); 
     }
 
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
@@ -44,8 +42,6 @@ export default function ExploreFilterBar() {
     setAvailability(v);
     updateQueryParams("available", v);
   };
-
-  // 🎯 Search: state তাৎক্ষণিক আপডেট হয়, কিন্তু URL 400ms debounce-এ
   const handleSearch = (v) => {
     setSearch(v);
     if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -53,8 +49,6 @@ export default function ExploreFilterBar() {
       updateQueryParams("search", v);
     }, 400);
   };
-
-  // 🎯 Cleanup on unmount
   useEffect(() => () => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
   }, []);

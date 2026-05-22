@@ -4,6 +4,7 @@ import { FiMapPin, FiUsers, FiTag, FiZap } from "react-icons/fi";
 import { GiSteeringWheel } from "react-icons/gi";
 import { BsFuelPump } from "react-icons/bs";
 import BookingModal from "@/components/ExploreCars/BookingModal";
+import HostProfile from "@/components/ExploreCars/Hostprofile";
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
@@ -35,10 +36,22 @@ export async function generateMetadata({ params }) {
 
 const DetailsPage = async ({ params }) => {
   const { id } = await params;
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/cars/${id}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/cars/${id}`, {
+    cache: "no-store",
+  });
   const car = await res.json();
   // const res2 = await fetch("http://localhost:5000/bookings");
   // const bookings = await res2.json();
+  // console.log(bookings);
+
+  const resData = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/myAddedCars`,
+    {
+      cache: "no-store",
+    },
+  );
+  const host = await resData.json();
+  console.log(host);
 
   const specs = [
     { icon: <FiUsers />, label: "Seats", value: car.seat_capacity },
@@ -53,7 +66,7 @@ const DetailsPage = async ({ params }) => {
     {
       icon: <FiZap />,
       label: "Bookings",
-      value: `${car._id.length} times`,
+      value: `${car.booking_count || 0} times`,
     },
   ];
 
@@ -235,6 +248,7 @@ const DetailsPage = async ({ params }) => {
             </div>
           </div>
         </div>
+        <HostProfile host={host} />
       </section>
     </main>
   );

@@ -1,5 +1,6 @@
 "use client";
 import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 const BookingForm = ({
@@ -17,8 +18,8 @@ const BookingForm = ({
 }) => {
   const { data: session } = authClient.useSession();
   const user = session?.user;
-  console.log(user);
 
+  const router = useRouter();
   const handleBooking = async () => {
     if (!dateRange?.from || !dateRange?.to) {
       toast.error("Please select booking dates!");
@@ -69,6 +70,7 @@ const BookingForm = ({
         toast.success("Booking confirmed! 🚗");
         onClose();
         setNote("");
+        router.refresh();
       } else {
         toast.error("Something went wrong!");
       }
