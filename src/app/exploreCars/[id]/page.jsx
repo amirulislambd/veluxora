@@ -43,15 +43,7 @@ const DetailsPage = async ({ params }) => {
   // const res2 = await fetch("http://localhost:5000/bookings");
   // const bookings = await res2.json();
   // console.log(bookings);
-
-  const resData = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/myAddedCars`,
-    {
-      cache: "no-store",
-    },
-  );
-  const host = await resData.json();
-  console.log(host);
+  
 
   const specs = [
     { icon: <FiUsers />, label: "Seats", value: car.seat_capacity },
@@ -248,7 +240,7 @@ const DetailsPage = async ({ params }) => {
             </div>
           </div>
         </div>
-        <HostProfile host={host} />
+        <HostProfile host={car} />
       </section>
     </main>
   );
