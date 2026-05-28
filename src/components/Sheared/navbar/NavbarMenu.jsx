@@ -13,10 +13,10 @@ const loggedInLinks = [
 ];
 
 const loggedOutLinks = [
-  { href: "/",             label: "HOME"        },
-  { href: "/explore-cars", label: "EXPLORE CARS"},
-  { href: "/login",        label: "LOGIN"       },
-  { href: "/register",     label: "REGISTER"    },
+  { href: "/", label: "HOME" },
+  { href: "/exploreCars", label: "EXPLORE CARS" },
+  { href: "/login", label: "LOGIN" },
+  { href: "/register", label: "REGISTER" },
 ];
 
 const NavbarMenu = ({ user }) => {

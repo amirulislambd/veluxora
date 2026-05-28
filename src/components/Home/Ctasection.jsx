@@ -18,7 +18,7 @@ const CTASection = () => {
             The Road is Calling. Answer in Style.
           </h2>
           <Link
-            href="/explore-cars"
+            href="/exploreCars"
             className="inline-block bg-[#e6c364] text-[#3d2e00] text-[11px] font-bold tracking-[0.3em] uppercase px-12 py-5 rounded-full hover:scale-105 transition-all"
           >
             Reserve Your Dates

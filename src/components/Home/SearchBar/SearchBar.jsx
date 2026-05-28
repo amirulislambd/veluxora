@@ -14,7 +14,7 @@ const SearchBar = () => {
 
   const handleSearch = () => {
     const params = new URLSearchParams(form);
-    router.push(`/explore-cars?${params.toString()}`);
+    router.push(`/exploreCars?${params.toString()}`);
   };
 
   return (

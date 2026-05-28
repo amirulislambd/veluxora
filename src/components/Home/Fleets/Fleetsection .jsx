@@ -22,7 +22,7 @@ const FleetSection = async () => {
           </h2>
         </div>
         <Link
-          href="/explore-cars"
+          href="/exploreCars"
           className="text-[11px] font-semibold tracking-[0.15em] uppercase border border-[#e6c364] text-[#e6c364] px-8 py-3 rounded-full hover:bg-[#e6c364] hover:text-[#3d2e00] transition-all"
         >
           View All
