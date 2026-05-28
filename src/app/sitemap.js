@@ -2,7 +2,7 @@ export default async function sitemap() {
     const baseUrl = "https://veluxora.vercel.app";
   
     
-    const staticRoutes = ["", "/exploreCars", "/login", "/register", "/myAddedCars"].map((route) => ({
+    const staticRoutes = ["", "/exploreCars"].map((route) => ({
       url: `${baseUrl}${route}`,
       lastModified: new Date().toISOString(),
       changeFrequency: route === "" ? "daily" : "weekly",
@@ -13,7 +13,7 @@ export default async function sitemap() {
     let carRoutes = [];
     try {
       const apiBase = process.env.NEXT_PUBLIC_API_URL || "https://veluxora-server.vercel.app";
-      const res = await fetch(`${apiBase}/cars`, { cache: "no-store" });
+      const res = await fetch(`${apiBase}/cars`, { next: { revalidate: 3600 } });
       
       if (res.ok) {
         const cars = await res.json();

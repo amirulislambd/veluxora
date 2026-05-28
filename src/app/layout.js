@@ -56,6 +56,10 @@ export const metadata = {
       "Experience high-performance vehicle management and premium rentals.",
     images: ["/og-image.jpg"],
   },
+
+  verification: {
+    google: "hqLUcA89yMna2GmB8rYnhUhqAWUXBjhAaL4FrLEwQaI",
+  },
 };
 
 export default function RootLayout({ children }) {
