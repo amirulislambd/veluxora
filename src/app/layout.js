@@ -1,4 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/Sheared/navbar/Navbar";
 import { Toaster } from "react-hot-toast";
@@ -60,6 +61,47 @@ export const metadata = {
   verification: {
     google: "hqLUcA89yMna2GmB8rYnhUhqAWUXBjhAaL4FrLEwQaI",
   },
+  alternates: {
+    canonical: "https://veluxora.vercel.app",
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://veluxora.vercel.app/#organization",
+      name: "Veluxora",
+      url: "https://veluxora.vercel.app",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://veluxora.vercel.app/og-image.jpg",
+      },
+      description:
+        "Drive beyond ordinary. Experience the pinnacle of automotive engineering with Veluxora's curated collection of high-performance vehicles.",
+      sameAs: [],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://veluxora.vercel.app/#website",
+      url: "https://veluxora.vercel.app",
+      name: "VELUXORA",
+      description: "Luxury & High-Performance Car Rental",
+      publisher: {
+        "@id": "https://veluxora.vercel.app/#organization",
+      },
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate:
+            "https://veluxora.vercel.app/exploreCars?search={search_term_string}",
+        },
+        "query-input": "required name=search_term_string",
+      },
+    },
+  ],
 };
 
 export default function RootLayout({ children }) {
@@ -69,6 +111,14 @@ export default function RootLayout({ children }) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
+      <head>
+        <Script
+          id="json-ld-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          strategy="beforeInteractive"
+        />
+      </head>
       <body className="min-h-full flex flex-col">
         <Navbar />
         <main className="pt-[72px]">{children}</main>

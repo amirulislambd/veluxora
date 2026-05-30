@@ -1,10 +1,27 @@
 import { getCarById, getCars } from "@/lib/dataFecth";
 import Image from "next/image";
+import Script from "next/script";
 import { FiMapPin, FiUsers, FiTag, FiZap } from "react-icons/fi";
 import { GiSteeringWheel } from "react-icons/gi";
 import { BsFuelPump } from "react-icons/bs";
 import BookingModal from "@/components/ExploreCars/BookingModal";
 import HostProfile from "@/components/ExploreCars/Hostprofile";
+
+export async function generateStaticParams() {
+  try {
+    const apiBase =
+      process.env.NEXT_PUBLIC_SERVER_URL ||
+      "https://veluxora-server.vercel.app";
+    const res = await fetch(`${apiBase}/cars`, {
+      next: { revalidate: 3600 },
+    });
+    if (!res.ok) return [];
+    const cars = await res.json();
+    return cars.map((car) => ({ id: car._id.toString() }));
+  } catch {
+    return [];
+  }
+}
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
@@ -37,13 +54,36 @@ export async function generateMetadata({ params }) {
 const DetailsPage = async ({ params }) => {
   const { id } = await params;
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/cars/${id}`, {
-    cache: "no-store",
+    next: { revalidate: 3600 },
   });
   const car = await res.json();
-  // const res2 = await fetch("http://localhost:5000/bookings");
-  // const bookings = await res2.json();
-  // console.log(bookings);
-  
+
+  const carJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: car.car_name,
+    description:
+      car.description ||
+      `Rent the high-performance ${car.car_name} on VELUXORA.`,
+    image: car.image,
+    url: `https://veluxora.vercel.app/exploreCars/${id}`,
+    brand: { "@type": "Brand", name: car.car_name?.split(" ")[0] || "Veluxora" },
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "USD",
+      price: car.daily_rent_price,
+      priceSpecification: {
+        "@type": "UnitPriceSpecification",
+        price: car.daily_rent_price,
+        priceCurrency: "USD",
+        unitText: "DAY",
+      },
+      availability: car.availability_status
+        ? "https://schema.org/InStock"
+        : "https://schema.org/OutOfStock",
+      seller: { "@type": "Organization", name: "Veluxora" },
+    },
+  };
 
   const specs = [
     { icon: <FiUsers />, label: "Seats", value: car.seat_capacity },
@@ -64,6 +104,12 @@ const DetailsPage = async ({ params }) => {
 
   return (
     <main className="max-w-7xl mx-6 md:mx-auto bg-[#0A0A0F]">
+      <Script
+        id={`json-ld-car-${id}`}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(carJsonLd) }}
+        strategy="beforeInteractive"
+      />
       {/* ── HERO IMAGE ── */}
       <section className="relative w-full h-[50vh] overflow-hidden">
         <Image
