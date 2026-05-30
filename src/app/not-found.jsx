@@ -1,6 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 
+export const metadata = {
+  title: "404 — Page Not Found | VELUXORA",
+  description: "This page could not be found. Explore the Veluxora premium fleet.",
+  robots: { index: false, follow: false },
+};
+
 const NotFound = () => {
   return (
     <main className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0A0A0F]">
@@ -50,10 +56,10 @@ const NotFound = () => {
             Return to Fleet
           </Link>
           <Link
-            href="/exploreCar"
+            href="/exploreCars"
             className="btn-ghost px-8 py-3 rounded-full text-[11px]"
           >
-            Contact Concierge
+            Explore Fleet
           </Link>
         </div>
       </div>

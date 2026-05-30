@@ -4,6 +4,10 @@ export const metadata = {
   title: "Login | VELUXORA Drive — Inner Circle",
   description:
     "Enter the inner circle of automotive excellence. Sign in to your Obsidian Drive account to manage your luxury fleet and bookings.",
+  robots: {
+    index: false,
+    follow: false,
+  },
   openGraph: {
     title: "Login | VELUXORA",
     description:
